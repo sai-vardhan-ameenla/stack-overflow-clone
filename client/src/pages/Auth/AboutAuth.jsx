@@ -3,7 +3,7 @@ import './Auth.css'
 
 const AboutAuth = () => {
   return (
-    <div class="auth-container-1">
+    <div className="auth-container-1">
         <h1>Join the Stack Overflow community</h1>
         <p>Get unstuck — ask a question</p>
         <p>Unlock new privileges like voting and commenting</p>

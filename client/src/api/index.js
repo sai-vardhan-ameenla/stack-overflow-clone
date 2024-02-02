@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const server = axios.create("http://localhost:5000/")
+const API = axios.create({ baseURL:'http://localhost:5000'})
 
-export const logIn = (authData) => server.post('/users/login',authData)
-export const signUp = (authData) => server.post('/users/singm',authData)
+export const logIn = (authData) => API.post('/users/login',authData)
+export const signUp = (authData) => API.post('/users/signup',authData)

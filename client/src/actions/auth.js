@@ -1,6 +1,6 @@
 import * as api from '../api'
 
-export const singup = (authData , navigate) => async (dispatch) => {    
+export const signup = (authData , navigate) => async (dispatch) => {    
     try {
         const {data}=await api.signUp(authData)
         dispatch ({type:'AUTH',data})
@@ -9,13 +9,14 @@ export const singup = (authData , navigate) => async (dispatch) => {
 
     } catch (error) {
      console.log(error)   
+
     }
 
 }
 
 export const login = (authData , navigate) => async (dispatch) => {
     try {
-        const {data}=await api.signUp(authData)
+        const {data}=await api.logIn(authData)
         dispatch ({type:'AUTH',data})
         navigate('/')
     } catch (error) {

@@ -61,7 +61,7 @@ const HomeMainbar = () => {
     time:'jan 1'
   }]
   
-  var user =1
+  const user =1
   
   const redirect= () => {
 

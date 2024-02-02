@@ -3,11 +3,12 @@ import bcrypt from 'bcryptjs'
 
 import users from './../models/auth.js'
 
-export const singup = async (req , res) => {
+export const signup = async (req , res) => {
     const {name,email ,password} =req.body;
     try{
         const existingUser =await users.findOne({ email})
         if(existingUser){
+            console.log(existingUser)
             return res.status(404).json({messsage:'User already exist'});
         }
 
@@ -17,6 +18,7 @@ export const singup = async (req , res) => {
         res.status(200).json({result :newUser,token})
     }catch(error){
         res.status(500).json('something went wrong')
+        console.log(error)
     }
 
 }
