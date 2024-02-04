@@ -1,14 +1,20 @@
 import React from 'react'
 import {useLocation} from 'react-router-dom'
 import './HomeMainbar.css'
-import Questions from './Questions'
+
 import {useNavigate} from 'react-router-dom'
+import {useSelector} from 'react-redux'
+import { QuestionList } from './QuestionList'
+
 
 
 const HomeMainbar = () => {
-  const Location =useLocation()
+  const User = useSelector((state)=>(state.currentUserReducer))
+  const location =useLocation()
   const navigate =useNavigate()
-  var questionList = [{
+  const questionList =useSelector(state =>state.questionsReducer)
+  // console.log(questionList)
+  /* var questionList = [{
     _id:1,
     upVotes:4,
     votes:3,
@@ -59,13 +65,13 @@ const HomeMainbar = () => {
   }],
     userId:1,
     time:'jan 1'
-  }]
+  }] */
   
-  const user =1
+  
   
   const redirect= () => {
 
-    if (user ==null){
+    if (User === null){
       alert("login or signup to ask a question");
       navigate('/Auth')
     }
@@ -78,21 +84,17 @@ const HomeMainbar = () => {
     <div className='main-bar'>
       <div className='main-bar-header'>
         {
-          Location.pathname ==='/'? <h1>Top Questions</h1> :<h1>All Questions</h1>
+          location.pathname ==='/'? <h1>Top Questions</h1> :<h1>All Questions</h1>
         }
         <button  onClick={redirect} className='ask-btn'>Ask Questons</button>
       </div>
       {
-        questionList === null ? <h2>Loading....</h2> :
+        questionList?.data === null ? 
+        <h2>Loading....</h2> :
         <>
-        <p> {questionList.length} questions</p>
-        {
-          questionList.map((questions)=>(
-            <Questions questions={questions} key={questions._id} />
-          )
-          )
-  
-        }
+        <p> {questionList?.data.length} questions</p>
+        
+        <QuestionList questionList={questionList?.data} />
         
         </>
       }

@@ -17,19 +17,23 @@ const Auth = () => {
     const navigate =useNavigate()
 
     const handleSubmit = (e)=>{
-        e.preventDefault(0)
-        if(!email && !password){
+        e.preventDefault()
+        if(!email || !password){
             alert('Enter email and password')
+            return
         }
-        if(!name){
-            alert('Enter email and password')
-        }
+        
         if(IsSignup){
+            if(!name){
+                alert('Enter email and password')
+                return
+            }
             
-            dispatch(signup({ name, email, password }),navigate)
+            dispatch(signup({ name, email, password }, navigate));
         }
         else{
-            dispatch(login({ email, password }),navigate);
+            
+            dispatch(login({ email, password },navigate))
             
         }
     }
@@ -42,7 +46,7 @@ const Auth = () => {
         {IsSignup && <AboutAuth />}
         <div className='auth-container'>
             {!IsSignup && <img src={icon} alt="stack overfloew"  className='icon'/> }
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} >
                 {
                     IsSignup &&(
                         <label htmlFor='displayname'>

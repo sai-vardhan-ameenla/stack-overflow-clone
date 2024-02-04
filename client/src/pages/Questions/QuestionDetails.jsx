@@ -1,14 +1,20 @@
-import React from 'react'
+import React, {useState} from 'react'
+import copy from 'copy-to-clipboard'
+import moment from 'moment'
 import upvote from '../../assets/sort-up.svg'
 import downvote from'../../assets/sort-down.svg'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import './Question.css'
 import Avatar from '../../components/Avatar/Avatar'
 import DisplayAnswer from './DisplayAnswer';
+import {useDispatch, useSelector} from 'react-redux';
+import {deleteQuestion, postAnswers} from '../../actions/question'
 
 const QuestionDetails = () => {
     const { id } = useParams();
-    var questionList = [{
+    const questionList =useSelector(state =>state.questionsReducer)
+
+  /*   var questionList = [{
         _id:'1',
         upVotes:4,  
         votes:3,
@@ -20,7 +26,7 @@ const QuestionDetails = () => {
         userId:1,
         answer:[{
             answerBody:'Answer',
-            unserAnswered :'kumar',
+            userAnswered :'kumar',
             answeredOn:'jan 2',
             userId:2      
         }],
@@ -59,51 +65,89 @@ const QuestionDetails = () => {
       }],
         userId:1,
         time:'jan 1'
-      }];
-      console.log(id);
+      }]; */
+     
+      const location = useLocation()
+
+      const url ="http://localhost:3000"
+      const dispatch =useDispatch()
+      const Navigate =useNavigate()
+      const User = useSelector((state)=>(state.currentUserReducer))
+      const [Answer,setAnswer] = useState('')
+
+
+      const handlePosAns = (e,answerLength) =>{
+        e.preventDefault()
+        if(User ===null){
+            alert('Login or Signup to answer')
+            Navigate('/Auth')
+        }
+        else{
+            if(Answer === ''){
+                alert('Enter an answer before submitting')
+            }
+            else{
+                dispatch(postAnswers({id , noOfAnswers:answerLength+1,answerBody:Answer,userAnswered: User.result.name,userId: User?.result?._id}))
+            }
+        }
+      }
+      
+      const handleShare =() =>{
+        copy(url+location.pathname)
+        alert('Copied url : '+url+location.pathname)
+      }
+
+      const handledelete= ()=>{
+        dispatch(deleteQuestion(id))
+        // Navigate('/')
+      }
+
+
   return (
     <div className='question-details-page'>
-        <div>
-            <h1>hello</h1>
-        </div>
+        
         {
-            questionList === 0       ?
+            questionList?.data === 0       ?
             <h1>Loading..</h1>:
             <>
                 {
-                    questionList.filter(questions=>questions._id === id).map(questions=>(
-                        <div key= {questions._id }>
+                    questionList?.data.filter(question=>question._id === id).map(question=>(
+                        <div key= {question._id }>
                             {
-                                console.log(questions)
+                                console.log(question)
                             }
                             <section className="question-details-container" >
-                                <h1>{questions.questionTitle}</h1>
+                                <h1>{question.questionTitle}</h1>
                                 <div className="question-details-container-2">
                                     <div className="question-votes">
                                         <img src={upvote} className='votes-icon' alt='' width='18px' />
-                                        <p>{questions.upVotes - questions.votes}</p>
+                                        <p>{question.upVotes - question.votes}</p>
                                         <img src={downvote} className='votes-icon' alt='' width='18px'/>
                                     </div>
                                     <div style={{width:'100%'}}>
-                                        <p className="question-body">{questions.questionBody}</p>
+                                        <p className="question-body">{question.questionBody}</p>
                                         <div className="question-details-tags">
                                             {
-                                                questions.questionTags.map((tag) => (
+                                                question.questionTags.map((tag) => (
                                                     <p key={tag}>{tag}</p>
                                                 ))
                                             }
                                         </div>
                                         <div className="question-actions-user">
                                         <div>
-                                                <button type='button'>share</button>
-                                                <button type='button'>Delete</button>
+                                                <button type='button' onClick={handleShare}>share</button>
+                                                {
+                                                    User?.result?._id === question?.userId && (
+                                                        <button type='button' onClick={handledelete}>Delete</button>
+                                                    )
+                                                }
                                             </div>
                                             <div>
-                                                <p>anked {questions.time}</p>
-                                                <Link to={`/User/${questions.userId}`} className='user-link' style={{color:'#0086d8'}}>
-                                                    <Avatar backgroundColor='orange' px='8px' py='5px'> {questions.userPosted.charAt(0).toUpperCase()}</Avatar>
+                                                <p>asked {moment(question.time).fromNow()}</p>
+                                                <Link to={`/User/${question.userId}`} className='user-link' style={{color:'#0086d8'}}>
+                                                    <Avatar backgroundColor='orange' px='8px' py='5px'> {question.userPosted.charAt(0).toUpperCase()}</Avatar>
                                                     <div>
-                                                        {questions.userPosted}
+                                                        {question.userPosted}
                                                     </div>
 
                                                 </Link>
@@ -113,12 +157,12 @@ const QuestionDetails = () => {
                                 </div>
                             </section>
                             {
-                                questions.noOfAnswers !== 0 && (
+                                question.noOfAnswers !== 0 && (
                                     <section>
                                         <h3>
-                                            {questions.noOfAnswers} answers
+                                            {question.noOfAnswers} answers
                                         </h3>
-                                        <DisplayAnswer key={questions._id} questions={questions} />
+                                        <DisplayAnswer key={question._id} question={question} handleShare={handleShare}/>
                                     </section>
                                 )
                             }
@@ -126,19 +170,19 @@ const QuestionDetails = () => {
                                 <h3>
                                     Your Answer
                                 </h3>
-                                <form > 
-                                    <textarea name="" id="" cols="30"  rows="10"></textarea><br   />
+                                <form onSubmit={(e)=>{handlePosAns(e,question.answer.length)}}> 
+                                    <textarea name=""  cols="30"  rows="10" onChange={e=>setAnswer(e.target.value)}></textarea><br   />
                                     <input type='submit' className='post-ans-btn' value='Post Your Answer' />
                                 </form>
                                 <p className='bottom'>
-                                    Browse other Question tagged
+                                    Browse other Question tagged 
                                     {
-                                        questions.questionTags.map((tag)=>(
+                                        question.questionTags.map((tag)=>(
                                             <Link to='/Tags' key={tag} className='ans-tags'>{tag}</Link>
                                         ))
                                     }
                                     or
-                                    <Link to='/AskQuestion' style={{textDecoration:'none',color:"#009dff"}}>ask your own question</Link>
+                                    <Link to='/AskQuestion' style={{textDecoration:'none',color:"#009dff"}}> ask your own question </Link>
                                 </p>
                             </section>
 

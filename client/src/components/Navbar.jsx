@@ -1,13 +1,20 @@
-import React from "react"
+import React ,{useEffect} from "react"
+import { useSelector , useDispatch} from 'react-redux'
 import { Link } from "react-router-dom"
 import logo from '..//assets/logo.png'
 import search from '..//assets/search.svg'
 import Avatar from "./Avatar/Avatar"
 import './Navbar.css'
+import {setCurrentUser} from "../actions/currentUser"
 
 
 const Navbar=()=> {
-    var User=null
+    const dispatch =useDispatch()
+    var User= useSelector ((state) => (state.currentUserReducer))
+    useEffect(() => {
+      dispatch(setCurrentUser(JSON.parse(localStorage.getItem(''))))
+    }, [dispatch])
+    
   return (
     <nav className="main-nav">
         <div className="navbar">
@@ -27,7 +34,10 @@ const Navbar=()=> {
                 
                 <Link to='/Auth' className="nav-item nav-links">Log In</Link>:
                 <>
-                          <Link to='/' style={{textDecoration:"none"}}><Avatar padding={' 7px 10px'} backgroundColor={'blue'} borderRadius={'50%'} textAlign={'center'} color={'white'} fontSize={'12px'} cursor={'none'} marginTop={'4px '} textDecoration={'none'}>M</Avatar></Link>
+                          <Link to='/' style={{textDecoration:"none"}}>
+                            <Avatar padding={' 7px 10px'} backgroundColor={'blue'} borderRadius={'50%'} textAlign={'center'} color={'white'} fontSize={'12px'} cursor={'none'} marginTop={'4px '} textDecoration={'none'}>
+                               {User.result.name.charAt(0).toUpperCase()}
+                            </Avatar></Link>
                           <button className="nav-item nav-links">Log out</button>
                 </>
                 
