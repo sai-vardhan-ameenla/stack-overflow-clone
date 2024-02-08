@@ -3,17 +3,23 @@ import { Route,Routes } from 'react-router-dom'
 import Home from '../src/pages/Home/Home'
 import Auth from '../src/pages/Auth/Auth'
 import Questions from './pages/Questions/Questions'
-import AskQuestions from './pages/AskQuestion/AskQuestions'
+import AskQuestion from './pages/AskQuestion/AskQuestions'
 import DisplayQuestion from './pages/Questions/DisplayQuestion'
+import {Tags} from './pages/Tags/Tags'
+import {Users} from './pages/Users/Users'
+import {UserProfile} from './pages/UserProfile/UserProfile'
 
 const AllRoutes = () => {
   return (
     <Routes>
         <Route path='/' element={<Home />}/>
         <Route path='/Auth' element={<Auth />}/>
-        <Route path='/Questions' element={<Questions />}/>
-        <Route path='/AskQuestion' element={<AskQuestions />}/>
-        <Route path="/questions/:id" element={<DisplayQuestion />}/>
+        <Route path='/Questions/*' element={<Questions />}/>
+        <Route path='/AskQuestion' element={<AskQuestion />}/>
+        <Route path="/Questions/:id" element={<DisplayQuestion />}/>
+        <Route path="/Tags" element={<Tags />}/>
+        <Route path="/Users" element={<Users />}/>
+        <Route path="/Users/:id" element={<UserProfile />}/>
     </Routes>
   )
 }

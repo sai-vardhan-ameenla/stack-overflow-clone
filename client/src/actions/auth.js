@@ -9,7 +9,7 @@ export const signup = (authData, navigate) => async (dispatch) => {
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem('Profile'))))
     navigate('/');
   } catch (error) {
-    console.error('Signup Error:', error);
+    console.log('Signup Error:', error);
     
   }
 }
@@ -21,7 +21,7 @@ export const login = (authData, navigate) => async (dispatch) => {
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem('Profile'))))
     navigate('/');
   } catch (error) {
-    console.error('Login Error:', error);
+    console.log('Login Error:', error);
  
   }
 }

@@ -82,6 +82,7 @@
     text-decoration: none;
     text-align: center;
     align-items: center;
+    flex-flow: row-reverse;
 }
 .user-link div{
     padding: 8px 10px;

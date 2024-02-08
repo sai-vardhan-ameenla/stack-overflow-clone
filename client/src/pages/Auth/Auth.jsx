@@ -9,7 +9,7 @@ import {useNavigate} from 'react-router-dom'
 
 
 const Auth = () => {
-    const [IsSignup, setIsSignup] = useState(false)
+    const [IsSign, setIsSign] = useState(false)
     const [name , setName ] =useState('')
     const [email ,setEmail] =useState('')
     const [password , setPassword]=useState('')
@@ -20,35 +20,35 @@ const Auth = () => {
         e.preventDefault()
         if(!email || !password){
             alert('Enter email and password')
-            return
+            
         }
         
-        if(IsSignup){
+        if(IsSign){
             if(!name){
-                alert('Enter email and password')
-                return
+                alert('Enter name to continue')
+                
             }
             
-            dispatch(signup({ name, email, password }, navigate));
+            dispatch(signup({name, email, password}, navigate));
         }
         else{
             
-            dispatch(login({ email, password },navigate))
+            dispatch(login({email, password}, navigate))
             
         }
     }
 
     const handleSwitch =() =>{
-        setIsSignup(!IsSignup)
+        setIsSign(!IsSign)
     }
   return (
     <section className='auth-section' >
-        {IsSignup && <AboutAuth />}
+        {IsSign && <AboutAuth />}
         <div className='auth-container'>
-            {!IsSignup && <img src={icon} alt="stack overfloew"  className='icon'/> }
+            {!IsSign && <img src={icon} alt="stack overflow"  className='icon'/> }
             <form onSubmit={handleSubmit} >
                 {
-                    IsSignup &&(
+                    IsSign &&(
                         <label htmlFor='displayname'>
                         <h3>
                             Display Name
@@ -67,21 +67,21 @@ const Auth = () => {
                     <div style={{display:'flex',justifyContent:'space-between'}}><h3>
                         Password
                     </h3>
-                    {!IsSignup && (<p style={{color:'rgb(0, 122, 198)', fontSize:'16px' ,fontWeight:'bold'}}>
+                    {!IsSign && (<p style={{color:'rgb(0, 122, 198)', fontSize:'16px' ,fontWeight:'bold'}}>
                         forget password ?
                     </p> )}</div>
                     <input type='password' name='password' id='password' onChange={(e)=>{setPassword(e.target.value)}}></input>
-                    {IsSignup && (<p>Passwords must contain at least eight<br/>characters, including at least 1 letter and 1<br/>number.</p>)}
-                    {IsSignup && (<label htmlFor='check'  className='check'>
+                    {IsSign && (<p>Passwords must contain at least eight<br/>characters, including at least 1 letter and 1<br/>number.</p>)}
+                    {IsSign && (<label htmlFor='check'  className='check'>
                         <input type="checkbox" className='check1' />
                         <p >Opt-in to receive occasional<br/>
                             product updates, user research invitations,<br/>
                             company announcements, and digests.</p>
                     </label>)}
                 </label>
-                <button type='submit' className='auth-btn'>{IsSignup ? 'Sign up ' :'Log In'}</button>
+                <button type='submit' className='auth-btn'>{IsSign ? 'Sign up ' :'Log In'}</button>
                 {
-                IsSignup && (
+                IsSign && (
                     <p className='span'>By clicking “Sign up”, you agree to our
                         <span > terms of<br/>service</span> 
                         <span >privacy policy </span> and 
@@ -92,8 +92,8 @@ const Auth = () => {
            
             
              <p style={{fontSize:'16px',textAlign:'center'}}>
-                {IsSignup ? 'Already have an account?':'Don\'t have an account ? ' }
-                <button type='button' className='handleswitch-btn' onClick={handleSwitch}>{IsSignup ? 'Log in' : 'Signup'}</button>
+                {IsSign ? 'Already have an account?':'Don\'t have an account ? ' }
+                <button type='button' className='handleswitch-btn' onClick={handleSwitch}>{IsSign ? 'Log in' : 'Sign up'}</button>
             </p>
         </div>
     </section>

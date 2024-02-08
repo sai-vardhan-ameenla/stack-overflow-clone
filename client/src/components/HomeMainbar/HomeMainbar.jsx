@@ -17,7 +17,7 @@ const HomeMainbar = () => {
   /* var questionList = [{
     _id:1,
     upVotes:4,
-    votes:3,
+    downVotes:3,
     noOfAnswers:2,
     questionTitle:"What is a function?",
     questionBody:"It meant to be",
@@ -26,7 +26,7 @@ const HomeMainbar = () => {
     userId:1,
     answer:[{
         answerBody:'Answer',
-        unserAnswered :'kumar',
+        userAnswered :'kumar',
         answeredOn:'jan 2',
         userId:2      
     }],
@@ -34,7 +34,7 @@ const HomeMainbar = () => {
   },{
     _id:2,
     upVotes:4,
-    votes:2,
+    downVotes:2,
     noOfAnswers:0,
     questionTitle:"What is a function?",
     questionBody:"It meant to be",
@@ -43,7 +43,7 @@ const HomeMainbar = () => {
     userId:2,
     answer:[{
       answerBody:'Answer',
-      unserAnswered :'kumar',
+      userAnswered :'kumar',
       answeredOn:'jan 2',
       userId:2      
   }],
@@ -51,7 +51,7 @@ const HomeMainbar = () => {
   },{
     _id:3,
     upVotes:4,
-    votes:1,
+    downVotes:1,
     noOfAnswers:0,
     questionTitle:"What is a function?",
     questionBody:"It meant to be",
@@ -59,7 +59,7 @@ const HomeMainbar = () => {
     userPosted:'mano',
     answer:[{
       answerBody:'Answer',
-      unserAnswered :'kumar',
+      userAnswered :'kumar',
       answeredOn:'jan 2',
       userId:2      
   }],
@@ -72,7 +72,7 @@ const HomeMainbar = () => {
   const redirect= () => {
 
     if (User === null){
-      alert("login or signup to ask a question");
+      alert("login or sign up to ask a question");
       navigate('/Auth')
     }
     else{

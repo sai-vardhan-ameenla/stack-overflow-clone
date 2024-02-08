@@ -5,14 +5,21 @@ import AllRoutes from "./AllRoutes";
 import { useDispatch } from "react-redux";
 import {fetchAllQuestions} from "./actions/question";
 import {useEffect} from "react";
+import {fetchAllUsers} from "./actions/users";
 
 
 
 function App() {
+
+
   const dispatch = useDispatch()
+  
   useEffect(() => {
     dispatch(fetchAllQuestions())
+    dispatch(fetchAllUsers())
   }, [dispatch])
+ 
+  
   
   return (
     

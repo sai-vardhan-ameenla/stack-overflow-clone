@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 
 const Questions = ({question}) => {
   return (
@@ -7,7 +8,7 @@ const Questions = ({question}) => {
     <div className='display-question-container'>
         
         <div className='display-votes-ans'>
-            <p>{question.upVotes.length - question.votes.length}</p>
+            <p>{question.upVote.length - question.downVote.length}</p>
             <p>votes</p>
         </div>
         <div className='display-votes-ans'>
@@ -25,7 +26,7 @@ const Questions = ({question}) => {
                 }
                 </div>
                 <p className="question-time">
-                    asked {question.time} {question.userPosted}
+                    asked {moment(question.time).fromNow()} {question.userPosted}
                 </p>
             </div>
         </div>

@@ -8,7 +8,7 @@ import './Question.css'
 import Avatar from '../../components/Avatar/Avatar'
 import DisplayAnswer from './DisplayAnswer';
 import {useDispatch, useSelector} from 'react-redux';
-import {deleteQuestion, postAnswers} from '../../actions/question'
+import {deleteQuestion, postAnswers, voteQuestion} from '../../actions/question'
 
 const QuestionDetails = () => {
     const { id } = useParams();
@@ -26,7 +26,7 @@ const QuestionDetails = () => {
         userId:1,
         answer:[{
             answerBody:'Answer',
-            userAnswered :'kumar',
+            usrAnswered :'kumar',
             answeredOn:'jan 2',
             userId:2      
         }],
@@ -43,7 +43,7 @@ const QuestionDetails = () => {
         userId:2,
         answer:[{
           answerBody:'Answer',
-          unserAnswered :'kumar',
+          userAnswered :'kumar',
           answeredOn:'jan 2',
           userId:2      
       }],
@@ -59,7 +59,7 @@ const QuestionDetails = () => {
         userPosted:'mano',
         answer:[{
           answerBody:'Answer',
-          unserAnswered :'kumar',
+          userAnswered :'kumar',
           answeredOn:'jan 2',
           userId:2      
       }],
@@ -99,20 +99,25 @@ const QuestionDetails = () => {
 
       const handledelete= ()=>{
         dispatch(deleteQuestion(id))
-        // Navigate('/')
+        Navigate('/')
       }
-
+      const handleupvote = ()=>{
+        dispatch(voteQuestion(id,'upVote',User?.result?._id))
+      }
+      const handledownvote = ()=>{
+        dispatch(voteQuestion(id,'downVote',User?.result?._id))
+      }
 
   return (
     <div className='question-details-page'>
         
         {
-            questionList?.data === 0       ?
+            questionList?.data === null  ?
             <h1>Loading..</h1>:
             <>
                 {
                     questionList?.data.filter(question=>question._id === id).map(question=>(
-                        <div key= {question._id }>
+                        <div key= {question._id }> 
                             {
                                 console.log(question)
                             }
@@ -120,9 +125,9 @@ const QuestionDetails = () => {
                                 <h1>{question.questionTitle}</h1>
                                 <div className="question-details-container-2">
                                     <div className="question-votes">
-                                        <img src={upvote} className='votes-icon' alt='' width='18px' />
-                                        <p>{question.upVotes - question.votes}</p>
-                                        <img src={downvote} className='votes-icon' alt='' width='18px'/>
+                                        <img src={upvote} className='votes-icon' alt='' width='18px' onClick={handleupvote}/>
+                                        <p>{question?.upVote?.length - question?.downVote?.length}</p>
+                                        <img src={downvote} className='votes-icon' alt='' width='18px' onClick={handledownvote}/>
                                     </div>
                                     <div style={{width:'100%'}}>
                                         <p className="question-body">{question.questionBody}</p>
@@ -144,7 +149,7 @@ const QuestionDetails = () => {
                                             </div>
                                             <div>
                                                 <p>asked {moment(question.time).fromNow()}</p>
-                                                <Link to={`/User/${question.userId}`} className='user-link' style={{color:'#0086d8'}}>
+                                                <Link to={`/Users/${question.userId}`} className='user-link' style={{color:'#0086d8'}}>
                                                     <Avatar backgroundColor='orange' px='8px' py='5px'> {question.userPosted.charAt(0).toUpperCase()}</Avatar>
                                                     <div>
                                                         {question.userPosted}

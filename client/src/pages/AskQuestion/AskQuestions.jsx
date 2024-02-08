@@ -6,7 +6,7 @@ import {askQuestion} from '../../actions/question'
 
 
 
-const AskQuestions = () => {
+const AskQuestion = () => {
 
   const dispatch =useDispatch()
   const navigate =useNavigate()
@@ -44,7 +44,7 @@ const AskQuestions = () => {
             </label>
             <label htmlFor="ask-ques-tags">
               <h4>Tags</h4>
-              <p>Add up to 5 tags to describe what your question is abou</p>
+              <p>Add up to 5 tags to describe what your question is about</p>
               <input type="text"  id='ask-ques-tags'placeholder='te.g. (xml typescript wordpress)' onChange={(e)=>{setquestionTags(e.target.value.split(' '))}} />
             </label>
 
@@ -56,4 +56,4 @@ const AskQuestions = () => {
   )
 }
 
-export default AskQuestions
+export default AskQuestion
