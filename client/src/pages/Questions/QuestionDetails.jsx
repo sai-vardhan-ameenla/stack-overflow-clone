@@ -69,7 +69,7 @@ const QuestionDetails = () => {
      
       const location = useLocation()
 
-      const url ="http://localhost:3000"
+      const url ="https://stack-overflow-clone-project-ba3c.onrender.com/"
       const dispatch =useDispatch()
       const Navigate =useNavigate()
       const User = useSelector((state)=>(state.currentUserReducer))

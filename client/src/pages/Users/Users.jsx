@@ -1,7 +1,7 @@
 import React from 'react'
 import './Users.css'
 import LeftSide from '../../components/LeftSide/LeftSide'
-import {useLocation} from 'react-router-dom'
+// import {useLocation} from 'react-router-dom'
 import UsersList from './UsersList' 
 export const Users = () => {
 
