@@ -40,7 +40,7 @@ export const EditProfile = ({currentUser,setSwitch}) => {
         <label htmlFor="tags">
           <h3>Watched tags</h3>
           <p> Add tags seperated by space</p>
-          <input type="text" id="tags" value={tags} onChange={(e)=>setTags(e.target.value.split(' '))}/>
+          <input type="text" id="tags" value={tags} onChange={(e)=>setTags(e.target.value.slice(' '))}/>
 
         </label><br />
         <input type="submit" value='Save Profile' className='user-submit-btn'/>

@@ -9,7 +9,7 @@ export const ProfileBio = ({currentProfile}) => {
           <><h4> Tags watched</h4>
           {
             currentProfile?.tags.map((tag)=>(
-              <p key={tag}>{tag}</p>
+              <p key={tag}>{tag} </p>
             ))
           }
 
